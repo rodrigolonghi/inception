@@ -1,0 +1,26 @@
+services:
+  mariadb:
+    build:
+      context: .
+      dockerfile: requirements/mariadb/Dockerfile
+      args:
+        MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+    container_name: mariadb
+    ports:
+      - "3306:3306"
+    restart: always
+    volumes:
+      - mariadb-volume:/var/lib/mariadb
+    networks:
+      - inception
+
+volumes:
+  mariadb-volume:
+    driver_opts:
+      o: bind
+      type: none
+      device: ~/data/mariadb
+
+networks:
+  inception:
+    driver: bridge
