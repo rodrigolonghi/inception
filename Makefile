@@ -7,11 +7,9 @@ all: hosts
 	cd srcs/ && docker-compose -f docker-compose.yml up -d --build
 
 hosts:
-ifneq (${DOMAIN},rfelipe-.42.fr)
 	cp /etc/hosts ./hosts_backup
 	sudo rm /etc/hosts
 	sudo cp ./srcs/requirements/nginx/tools/hosts /etc/
-endif
 
 down:
 	cd srcs/ && docker-compose -f docker-compose.yml down
@@ -27,5 +25,6 @@ endif
 fclean: clean
 	docker system prune -a --volumes
 	sudo mv ./hosts_backup /etc/hosts
+	sudo rm -rf /home/rfelipe-
 
 .PHONY: all hosts down clean fclean
